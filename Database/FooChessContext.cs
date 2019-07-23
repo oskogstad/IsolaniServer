@@ -20,6 +20,6 @@ namespace foo_chess_server.Database
                 user.HasIndex(usr => usr.Email).IsUnique();
             });
         }
-        DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
