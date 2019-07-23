@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace foo_chess_server 
+namespace foo_chess_server.Controllers
 {
     [ApiController]
     [Route("api/auth")]
