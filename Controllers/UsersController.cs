@@ -4,6 +4,7 @@ using foo_chess_server.Domain;
 using foo_chess_server.Database;
 using foo_chess_server.Utils;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System;
 
 namespace foo_chess_server.Controllers
@@ -32,6 +33,13 @@ namespace foo_chess_server.Controllers
 
             if(string.IsNullOrWhiteSpace(newUserDto.Password))
                 return BadRequest("Password cannot be empty");
+
+            var userWithEmailExists = await 
+                _fooChessContext.Users
+                .AnyAsync(user => user.Email.Equals(newUserDto.Email));
+
+            if(userWithEmailExists)
+                return StatusCode((int) HttpStatusCode.Conflict, $"User with email '{newUserDto.Email}' already exists");
 
             var now = DateTime.UtcNow;
 
