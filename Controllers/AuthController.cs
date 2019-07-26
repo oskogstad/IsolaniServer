@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using foo_chess_server.Database;
+using System;
+using foo_chess_server.Utils;
 
 namespace foo_chess_server.Controllers
 {
@@ -9,7 +11,9 @@ namespace foo_chess_server.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
-       private FooChessContext _fooChessContext;
+        private string _unauthorizedMessage = "Incorrect email and/or password";
+
+        private FooChessContext _fooChessContext;
         public AuthController(FooChessContext fooChessContext) 
         {
             _fooChessContext = fooChessContext;
@@ -20,11 +24,18 @@ namespace foo_chess_server.Controllers
         {
             var user = await _fooChessContext.Users.SingleOrDefaultAsync(usr => usr.Email.Equals(request.Email));
             if(user == null)
-            {
-                return Unauthorized("Incorrect email and/or password");
-            }
+                return Unauthorized(_unauthorizedMessage);
 
-            return Ok("User found");
+            try 
+            {
+                AuthHelpers.VerifyPassword(user.Password, request.Password);
+                return Ok("Login OK");
+            }
+            catch(UnauthorizedAccessException e)
+            {
+                Console.WriteLine(e.Message);
+                return Unauthorized(_unauthorizedMessage);
+            }
         }
 
         public class TokenRequest
