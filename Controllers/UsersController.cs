@@ -43,13 +43,15 @@ namespace foo_chess_server.Controllers
 
             var now = DateTime.UtcNow;
 
+            string savedPasswordHash = AuthHelpers.CreateSaltyPasswordHash(newUserDto.Password);
+
             var newUser = new User 
             {
                 Id = Guid.NewGuid(),
                 Email = newUserDto.Email,
                 CreatedDate  = now,
                 LastLoginDate = now,
-                Password = newUserDto.Password
+                Password = savedPasswordHash
             };
             
             await _fooChessContext.AddAsync(newUser);
