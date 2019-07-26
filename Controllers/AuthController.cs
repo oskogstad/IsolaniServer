@@ -29,6 +29,10 @@ namespace foo_chess_server.Controllers
             try 
             {
                 AuthHelpers.VerifyPassword(user.Password, request.Password);
+                
+                user.LastLoginDate = DateTime.UtcNow;
+                await _fooChessContext.SaveChangesAsync();
+
                 return Ok("Login OK");
             }
             catch(UnauthorizedAccessException e)
