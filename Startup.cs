@@ -4,6 +4,7 @@ using foo_chess_server.Database;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc;
 
 namespace foo_chess_server
 {
@@ -26,6 +27,7 @@ namespace foo_chess_server
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
                 })
                 .AddMvcCore()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonFormatters();
         }
 
