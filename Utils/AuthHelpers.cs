@@ -24,19 +24,25 @@ namespace foo_chess_server.Utils
             return Convert.ToBase64String(hashAndSaltBytes);
         }
 
-        public static void VerifyPassword(string savedPasswordHash, string requestPassword)
+        public static void VerifyPassword(string savedSaltyPasswordHash, string requestPassword)
         {
-            byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+            byte[] saltyHashBytes = Convert.FromBase64String(savedSaltyPasswordHash);
             byte[] salt = new byte[_saltLength];
+            byte[] savedPasswordHash = new byte[_hashLength];
             
-            Array.Copy(hashBytes, 0, salt, 0, _saltLength);
-            var pbkdf2 = new Rfc2898DeriveBytes(requestPassword, salt, _numberOfIterations);
-            
-            byte[] hash = pbkdf2.GetBytes(_hashLength);
+            Array.Copy(saltyHashBytes, _saltLength, savedPasswordHash, 0, _hashLength);
+            Array.Copy(saltyHashBytes, 0, salt, 0, _saltLength);
 
-            for (int i = 0; i < _hashLength; i++)
-                if (hashBytes[i + _saltLength] != hash[i])
-                    throw new UnauthorizedAccessException();
+            var pbkdf2 = new Rfc2898DeriveBytes(requestPassword, salt, _numberOfIterations);
+            byte[] requestPasswordHash = pbkdf2.GetBytes(_hashLength);
+          
+            // slow equals
+            int diff = savedPasswordHash.Length ^ requestPasswordHash.Length;
+            for(int i = 0; i < savedPasswordHash.Length && i < requestPasswordHash.Length; i++)
+                diff |= savedPasswordHash[i] ^ requestPasswordHash[i];
+            
+            if(!(diff == 0))
+                throw new UnauthorizedAccessException();
         }
     }
 }
