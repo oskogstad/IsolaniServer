@@ -42,7 +42,11 @@ namespace Isolani
                 {
                     var tokenSettings = tokenSettingsSection.Get<TokenSettings>();    
                     jwtBearerOptions.SaveToken = false;
+                    
+                    #if DEBUG
                     jwtBearerOptions.RequireHttpsMetadata = false;
+                    #endif
+                    
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
