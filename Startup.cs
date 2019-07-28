@@ -44,9 +44,9 @@ namespace Isolani
                     var tokenSettings = tokenSettingsSection.Get<TokenSettings>();    
                     jwtBearerOptions.SaveToken = false;
                     
-                    #if DEBUG
+#if DEBUG
                     jwtBearerOptions.RequireHttpsMetadata = false;
-                    #endif
+#endif
                     
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -88,11 +88,14 @@ namespace Isolani
                 app.UseHsts();
             }
 
-            app.UseCors(corsPolicyBuilder => 
-                    corsPolicyBuilder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader())
+            app.UseCors(corsPolicyBuilder =>
+                corsPolicyBuilder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("Token-Expired")
+                    .AllowCredentials()
+                    .Build())
                 .UseAuthentication()
                 .UseHttpsRedirection()
                 .UseMvc();
