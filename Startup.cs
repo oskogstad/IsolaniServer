@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Text;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Isolani.Database;
 using Isolani.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Isolani
 {
@@ -22,6 +27,32 @@ namespace Isolani
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var tokenSettingsSection = Configuration.GetSection("TokenSettings");
+            services.Configure<TokenSettings>(tokenSettingsSection);
+
+            services.AddCors();
+            
+            services
+                .AddAuthentication(authenticationOptions =>
+                {
+                    authenticationOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    authenticationOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(jwtBearerOptions =>
+                {
+                    var tokenSettings = tokenSettingsSection.Get<TokenSettings>();    
+                    jwtBearerOptions.SaveToken = false;
+                    jwtBearerOptions.RequireHttpsMetadata = false;
+                    jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey =  new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenSettings.Secret)),
+                        ValidIssuer = tokenSettings.Issuer,
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            
             services
                 .AddDbContext<IsolaniDbContext>(options => 
                 {
@@ -29,6 +60,10 @@ namespace Isolani
                 })
                 .AddMvc(options =>
                 {
+                    var policy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .Build();
+                    options.Filters.Add(new AuthorizeFilter(policy));
                     options.Filters.Add(typeof(ValidateModelStateAttribute));
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -41,8 +76,19 @@ namespace Isolani
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
-            app.UseMvc();
+            app.UseCors(corsPolicyBuilder => 
+                    corsPolicyBuilder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader())
+                .UseAuthentication()
+                .UseHttpsRedirection()
+                .UseMvc();
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using Isolani.Database;
 using Isolani.Model;
 using Isolani.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Isolani.Controllers
 {
@@ -19,6 +20,7 @@ namespace Isolani.Controllers
             _isolaniDbContext = isolaniDbContext;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateNewUser([FromBody] NewUserRequest newUserRequest)
         {
