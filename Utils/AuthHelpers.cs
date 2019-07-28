@@ -14,10 +14,10 @@ namespace foo_chess_server.Utils
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[_saltLength]);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations: _numberOfIterations);
-            byte[] hash = pbkdf2.GetBytes(_hashLength);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, _numberOfIterations);
+            var hash = pbkdf2.GetBytes(_hashLength);
 
-            byte[] hashAndSaltBytes = new byte[_saltLength + _hashLength];
+            var hashAndSaltBytes = new byte[_saltLength + _hashLength];
             Array.Copy(salt, 0, hashAndSaltBytes, 0, _saltLength);
             Array.Copy(hash, 0, hashAndSaltBytes, _saltLength, _hashLength);
 
@@ -26,22 +26,22 @@ namespace foo_chess_server.Utils
 
         public static void VerifyPassword(string savedSaltyPasswordHash, string requestPassword)
         {
-            byte[] saltyHashBytes = Convert.FromBase64String(savedSaltyPasswordHash);
-            byte[] salt = new byte[_saltLength];
-            byte[] savedPasswordHash = new byte[_hashLength];
+            var saltyHashBytes = Convert.FromBase64String(savedSaltyPasswordHash);
+            var salt = new byte[_saltLength];
+            var savedPasswordHash = new byte[_hashLength];
             
             Array.Copy(saltyHashBytes, _saltLength, savedPasswordHash, 0, _hashLength);
             Array.Copy(saltyHashBytes, 0, salt, 0, _saltLength);
 
             var pbkdf2 = new Rfc2898DeriveBytes(requestPassword, salt, _numberOfIterations);
-            byte[] requestPasswordHash = pbkdf2.GetBytes(_hashLength);
+            var requestPasswordHash = pbkdf2.GetBytes(_hashLength);
           
             // slow equals
-            int diff = savedPasswordHash.Length ^ requestPasswordHash.Length;
-            for(int i = 0; i < savedPasswordHash.Length && i < requestPasswordHash.Length; i++)
+            var diff = savedPasswordHash.Length ^ requestPasswordHash.Length;
+            for(var i = 0; i < savedPasswordHash.Length && i < requestPasswordHash.Length; i++)
                 diff |= savedPasswordHash[i] ^ requestPasswordHash[i];
             
-            if(!(diff == 0))
+            if(diff != 0)
                 throw new UnauthorizedAccessException();
         }
     }

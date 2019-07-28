@@ -13,7 +13,7 @@ namespace foo_chess_server.Controllers
     {
         private string _unauthorizedMessage = "Incorrect email and/or password";
 
-        private FooChessContext _fooChessContext;
+        private readonly FooChessContext _fooChessContext;
         public AuthController(FooChessContext fooChessContext) 
         {
             _fooChessContext = fooChessContext;

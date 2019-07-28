@@ -6,7 +6,7 @@ namespace foo_chess_server.Database
 {
     public class FooChessContext : DbContext 
     {
-        public FooChessContext(DbContextOptions<FooChessContext> options) : base(options) { }
+        public FooChessContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -19,7 +19,7 @@ namespace foo_chess_server.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private FooChessContext _fooChessContext;
+        private readonly FooChessContext _fooChessContext;
         public UsersController(FooChessContext fooChessContext) 
         {
             _fooChessContext = fooChessContext;
@@ -43,7 +43,7 @@ namespace foo_chess_server.Controllers
 
             var now = DateTime.UtcNow;
 
-            string savedPasswordHash = AuthHelpers.CreateSaltyPasswordHash(newUserDto.Password);
+            var savedPasswordHash = AuthHelpers.CreateSaltyPasswordHash(newUserDto.Password);
 
             var newUser = new User 
             {
