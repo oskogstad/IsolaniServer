@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace foo_chess_server.Domain 
+namespace foo_chess_server.Model 
 {
     public class User
     {

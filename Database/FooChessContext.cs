@@ -1,6 +1,6 @@
+using foo_chess_server.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using foo_chess_server.Domain;
 
 namespace foo_chess_server.Database
 {

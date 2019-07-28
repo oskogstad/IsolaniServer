@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using foo_chess_server.Domain;
 using foo_chess_server.Database;
 using foo_chess_server.Utils;
 using Microsoft.EntityFrameworkCore;
