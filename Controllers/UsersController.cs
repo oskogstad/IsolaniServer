@@ -13,17 +13,17 @@ namespace Isolani.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly IsolaniContext _isolaniContext;
-        public UsersController(IsolaniContext isolaniContext) 
+        private readonly IsolaniDbContext _isolaniDbContext;
+        public UsersController(IsolaniDbContext isolaniDbContext) 
         {
-            _isolaniContext = isolaniContext;
+            _isolaniDbContext = isolaniDbContext;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateNewUser([FromBody] NewUserRequest newUserRequest)
         {
             var userWithEmailExists = await 
-                _isolaniContext.Users
+                _isolaniDbContext.Users
                 .AnyAsync(user => user.Email.Equals(newUserRequest.Email));
 
             if(userWithEmailExists)
@@ -42,8 +42,8 @@ namespace Isolani.Controllers
                 Password = savedPasswordHash
             };
             
-            await _isolaniContext.AddAsync(newUser);
-            await _isolaniContext.SaveChangesAsync();
+            await _isolaniDbContext.AddAsync(newUser);
+            await _isolaniDbContext.SaveChangesAsync();
 
             return Ok(newUser.Id);
         }
@@ -51,7 +51,7 @@ namespace Isolani.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers() 
         {
-            var allUsers = await _isolaniContext.Users.ToListAsync();
+            var allUsers = await _isolaniDbContext.Users.ToListAsync();
             return Ok(allUsers);
         }
     }

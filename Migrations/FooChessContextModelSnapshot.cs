@@ -8,7 +8,7 @@ using Isolani.Database;
 
 namespace Isolani.Migrations
 {
-    [DbContext(typeof(IsolaniContext))]
+    [DbContext(typeof(IsolaniDbContext))]
     partial class FooChessContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

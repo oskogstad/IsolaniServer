@@ -14,16 +14,16 @@ namespace Isolani.Controllers
     {
         private string _unauthorizedMessage = "Incorrect email and/or password";
 
-        private readonly IsolaniContext _isolaniContext;
-        public AuthController(IsolaniContext isolaniContext) 
+        private readonly IsolaniDbContext _isolaniDbContext;
+        public AuthController(IsolaniDbContext isolaniDbContext) 
         {
-            _isolaniContext = isolaniContext;
+            _isolaniDbContext = isolaniDbContext;
         }
 
         [HttpPost("login/")]
         public async Task<IActionResult> LogIn([FromBody] TokenRequest tokenRequest) 
         {
-            var user = await _isolaniContext.Users.SingleOrDefaultAsync(usr => usr.Email.Equals(tokenRequest.Email));
+            var user = await _isolaniDbContext.Users.SingleOrDefaultAsync(usr => usr.Email.Equals(tokenRequest.Email));
             if(user == null)
                 return Unauthorized(_unauthorizedMessage);
 
@@ -32,7 +32,7 @@ namespace Isolani.Controllers
                 AuthHelpers.VerifyPassword(user.Password, tokenRequest.Password);
                 
                 user.LastLoginDate = DateTime.UtcNow;
-                await _isolaniContext.SaveChangesAsync();
+                await _isolaniDbContext.SaveChangesAsync();
 
                 return Ok("Login OK");
             }

@@ -22,7 +22,7 @@ namespace Isolani
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<IsolaniContext>(options => 
+                .AddDbContext<IsolaniDbContext>(options => 
                 {
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
                 })

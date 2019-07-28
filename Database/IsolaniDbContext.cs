@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Isolani.Database
 {
-    public class IsolaniContext : DbContext 
+    public class IsolaniDbContext : DbContext 
     {
-        public IsolaniContext(DbContextOptions options) : base(options) { }
+        public IsolaniDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

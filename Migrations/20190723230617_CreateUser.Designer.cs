@@ -9,7 +9,7 @@ using Isolani.Database;
 
 namespace Isolani.Migrations
 {
-    [DbContext(typeof(IsolaniContext))]
+    [DbContext(typeof(IsolaniDbContext))]
     [Migration("20190723230617_CreateUser")]
     partial class CreateUser
     {
