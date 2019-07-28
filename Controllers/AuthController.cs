@@ -12,7 +12,7 @@ namespace Isolani.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private string _unauthorizedMessage = "Incorrect email and/or password";
+        private const string _unauthorizedMessage = "Incorrect email and/or password";
 
         private readonly IsolaniDbContext _isolaniDbContext;
         public AuthController(IsolaniDbContext isolaniDbContext) 
