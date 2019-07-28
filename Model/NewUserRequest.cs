@@ -1,5 +1,5 @@
 
-namespace foo_chess_server.Model
+namespace Isolani.Model
 {
     public class NewUserRequest : TokenRequest { }
 }

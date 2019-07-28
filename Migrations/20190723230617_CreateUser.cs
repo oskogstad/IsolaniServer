@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace foo_chess_server.Migrations
+namespace Isolani.Migrations
 {
     public partial class CreateUser : Migration
     {

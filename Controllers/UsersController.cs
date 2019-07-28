@@ -1,29 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using foo_chess_server.Database;
-using foo_chess_server.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System;
-using foo_chess_server.Model;
+using Isolani.Database;
+using Isolani.Model;
+using Isolani.Utils;
 
-namespace foo_chess_server.Controllers
+namespace Isolani.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly FooChessContext _fooChessContext;
-        public UsersController(FooChessContext fooChessContext) 
+        private readonly IsolaniContext _isolaniContext;
+        public UsersController(IsolaniContext isolaniContext) 
         {
-            _fooChessContext = fooChessContext;
+            _isolaniContext = isolaniContext;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateNewUser([FromBody] NewUserRequest newUserRequest)
         {
             var userWithEmailExists = await 
-                _fooChessContext.Users
+                _isolaniContext.Users
                 .AnyAsync(user => user.Email.Equals(newUserRequest.Email));
 
             if(userWithEmailExists)
@@ -42,8 +42,8 @@ namespace foo_chess_server.Controllers
                 Password = savedPasswordHash
             };
             
-            await _fooChessContext.AddAsync(newUser);
-            await _fooChessContext.SaveChangesAsync();
+            await _isolaniContext.AddAsync(newUser);
+            await _isolaniContext.SaveChangesAsync();
 
             return Ok(newUser.Id);
         }
@@ -51,7 +51,7 @@ namespace foo_chess_server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers() 
         {
-            var allUsers = await _fooChessContext.Users.ToListAsync();
+            var allUsers = await _isolaniContext.Users.ToListAsync();
             return Ok(allUsers);
         }
     }

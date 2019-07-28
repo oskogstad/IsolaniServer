@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System;
 
-namespace foo_chess_server.Utils
+namespace Isolani.Utils
 {
     public static class AuthHelpers
     {

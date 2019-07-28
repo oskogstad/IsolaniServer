@@ -1,12 +1,12 @@
-using foo_chess_server.Model;
+using Isolani.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace foo_chess_server.Database
+namespace Isolani.Database
 {
-    public class FooChessContext : DbContext 
+    public class IsolaniContext : DbContext 
     {
-        public FooChessContext(DbContextOptions options) : base(options) { }
+        public IsolaniContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

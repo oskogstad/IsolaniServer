@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace foo_chess_server.Model
+namespace Isolani.Model
 {
     public class TokenRequest
     {

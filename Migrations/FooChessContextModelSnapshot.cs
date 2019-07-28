@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using foo_chess_server.Database;
+using Isolani.Database;
 
-namespace foo_chess_server.Migrations
+namespace Isolani.Migrations
 {
-    [DbContext(typeof(FooChessContext))]
+    [DbContext(typeof(IsolaniContext))]
     partial class FooChessContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

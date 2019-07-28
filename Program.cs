@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace foo_chess_server
+namespace Isolani
 {
     public class Program
     {

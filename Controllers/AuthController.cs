@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using foo_chess_server.Database;
 using System;
-using foo_chess_server.Model;
-using foo_chess_server.Utils;
+using Isolani.Database;
+using Isolani.Model;
+using Isolani.Utils;
 
-namespace foo_chess_server.Controllers
+namespace Isolani.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -14,16 +14,16 @@ namespace foo_chess_server.Controllers
     {
         private string _unauthorizedMessage = "Incorrect email and/or password";
 
-        private readonly FooChessContext _fooChessContext;
-        public AuthController(FooChessContext fooChessContext) 
+        private readonly IsolaniContext _isolaniContext;
+        public AuthController(IsolaniContext isolaniContext) 
         {
-            _fooChessContext = fooChessContext;
+            _isolaniContext = isolaniContext;
         }
 
         [HttpPost("login/")]
         public async Task<IActionResult> LogIn([FromBody] TokenRequest tokenRequest) 
         {
-            var user = await _fooChessContext.Users.SingleOrDefaultAsync(usr => usr.Email.Equals(tokenRequest.Email));
+            var user = await _isolaniContext.Users.SingleOrDefaultAsync(usr => usr.Email.Equals(tokenRequest.Email));
             if(user == null)
                 return Unauthorized(_unauthorizedMessage);
 
@@ -32,7 +32,7 @@ namespace foo_chess_server.Controllers
                 AuthHelpers.VerifyPassword(user.Password, tokenRequest.Password);
                 
                 user.LastLoginDate = DateTime.UtcNow;
-                await _fooChessContext.SaveChangesAsync();
+                await _isolaniContext.SaveChangesAsync();
 
                 return Ok("Login OK");
             }

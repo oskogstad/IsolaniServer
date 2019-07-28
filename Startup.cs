@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using foo_chess_server.Database;
-using foo_chess_server.Model;
+using Isolani.Database;
+using Isolani.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 
-namespace foo_chess_server
+namespace Isolani
 {
     public class Startup
     {
@@ -22,7 +22,7 @@ namespace foo_chess_server
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<FooChessContext>(options => 
+                .AddDbContext<IsolaniContext>(options => 
                 {
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
                 })

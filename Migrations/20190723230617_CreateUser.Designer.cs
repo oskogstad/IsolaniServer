@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using foo_chess_server.Database;
+using Isolani.Database;
 
-namespace foo_chess_server.Migrations
+namespace Isolani.Migrations
 {
-    [DbContext(typeof(FooChessContext))]
+    [DbContext(typeof(IsolaniContext))]
     [Migration("20190723230617_CreateUser")]
     partial class CreateUser
     {
