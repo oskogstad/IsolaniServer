@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Isolani.Database;
@@ -50,10 +51,12 @@ namespace Isolani
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
                         IssuerSigningKey =  new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenSettings.Secret)),
                         ValidIssuer = tokenSettings.Issuer,
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
             
