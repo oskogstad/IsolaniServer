@@ -6,15 +6,10 @@ using foo_chess_server.Utils;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System;
+using foo_chess_server.Model;
 
 namespace foo_chess_server.Controllers
 {
-    public class NewUserDto 
-    {
-        public string Email { get; set; }
-        public string Password { get; set; }
-    }
-
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
@@ -26,29 +21,23 @@ namespace foo_chess_server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNewUser([FromBody] NewUserDto newUserDto)
+        public async Task<IActionResult> CreateNewUser([FromBody] NewUserRequest newUserRequest)
         {
-            if(!newUserDto.Email.IsValidEmail())
-                return BadRequest($"Email '{newUserDto.Email}' is not valid");
-
-            if(string.IsNullOrWhiteSpace(newUserDto.Password))
-                return BadRequest("Password cannot be empty");
-
             var userWithEmailExists = await 
                 _fooChessContext.Users
-                .AnyAsync(user => user.Email.Equals(newUserDto.Email));
+                .AnyAsync(user => user.Email.Equals(newUserRequest.Email));
 
             if(userWithEmailExists)
-                return StatusCode((int) HttpStatusCode.Conflict, $"User with email '{newUserDto.Email}' already exists");
+                return StatusCode((int) HttpStatusCode.Conflict, $"User with email '{newUserRequest.Email}' already exists");
 
             var now = DateTime.UtcNow;
 
-            var savedPasswordHash = AuthHelpers.CreateSaltyPasswordHash(newUserDto.Password);
+            var savedPasswordHash = AuthHelpers.CreateSaltyPasswordHash(newUserRequest.Password);
 
             var newUser = new User 
             {
                 Id = Guid.NewGuid(),
-                Email = newUserDto.Email,
+                Email = newUserRequest.Email,
                 CreatedDate  = now,
                 LastLoginDate = now,
                 Password = savedPasswordHash

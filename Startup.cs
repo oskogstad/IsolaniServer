@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using foo_chess_server.Database;
+using foo_chess_server.Model;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,14 +22,15 @@ namespace foo_chess_server
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddDbContext<FooChessContext>(
-                options => 
-                { 
+                .AddDbContext<FooChessContext>(options => 
+                {
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
                 })
-                .AddMvcCore()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonFormatters();
+                .AddMvc(options =>
+                {
+                    options.Filters.Add(typeof(ValidateModelStateAttribute));
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
