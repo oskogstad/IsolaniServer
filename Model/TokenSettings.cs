@@ -10,5 +10,8 @@ namespace Isolani.Model
         
         [JsonProperty("issuer")]
         public string Issuer { get; set; }
+        
+        [JsonProperty("expirationTimeInMinutes")]
+        public int ExpirationTimeInMinutes { get; set; }
     }
 }

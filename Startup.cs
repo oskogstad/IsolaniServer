@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Isolani.Database;
 using Isolani.Model;
+using Isolani.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,9 @@ namespace Isolani
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IUserManagementService, UserManagementService>();
+            
             var tokenSettingsSection = Configuration.GetSection("TokenSettings");
             services.Configure<TokenSettings>(tokenSettingsSection);
 
@@ -44,9 +48,9 @@ namespace Isolani
                     var tokenSettings = tokenSettingsSection.Get<TokenSettings>();    
                     jwtBearerOptions.SaveToken = false;
                     
-#if DEBUG
+                    #if DEBUG
                     jwtBearerOptions.RequireHttpsMetadata = false;
-#endif
+                    #endif
                     
                     jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                     {
