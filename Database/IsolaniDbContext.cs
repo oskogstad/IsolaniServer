@@ -20,6 +20,9 @@ namespace Isolani.Database
                 user.HasIndex(usr => usr.Email).IsUnique();
             });
         }
+
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Tournament> Tournaments { get; set; }
     }
 }
