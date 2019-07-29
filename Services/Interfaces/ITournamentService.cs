@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Isolani.Model;
 
-namespace Isolani.Services
+namespace Isolani.Services.Interfaces
 {
     public interface ITournamentService
     {

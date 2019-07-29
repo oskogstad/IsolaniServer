@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Isolani.Database;
 using Isolani.Model;
+using Isolani.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

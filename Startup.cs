@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Isolani.Database;
 using Isolani.Model;
 using Isolani.Services;
+using Isolani.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;

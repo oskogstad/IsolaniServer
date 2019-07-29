@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Isolani.Database;
 using Isolani.Model;
+using Isolani.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Isolani.Services
