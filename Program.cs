@@ -8,7 +8,7 @@ namespace Isolani
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args)
-                .UseUrls("http://0.0.0.0:5001")
+                .UseUrls("http://*:5001")
                 .Build()
                 .Run();
         }
