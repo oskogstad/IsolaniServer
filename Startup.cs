@@ -97,6 +97,12 @@ namespace Isolani
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<IsolaniDbContext>();
+                context.Database.Migrate();
+            }
+            
             app.UseCors("SiteCorsPolicy");
             
             if (env.IsDevelopment())
