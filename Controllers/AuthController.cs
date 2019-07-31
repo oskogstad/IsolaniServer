@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Isolani.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class AuthController : ControllerBase
     {
         private const string _unauthorizedMessage = "Incorrect email and/or password";

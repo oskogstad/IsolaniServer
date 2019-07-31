@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Isolani.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class TournamentsController : ControllerBase
     {
         private readonly ITournamentService _tournamentService;

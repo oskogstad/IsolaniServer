@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Isolani.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly IUserManagementService _userManagementService;

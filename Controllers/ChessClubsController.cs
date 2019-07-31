@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Isolani.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class ChessClubsController : ControllerBase
     {
         private readonly IsolaniDbContext _isolaniDbContext;
