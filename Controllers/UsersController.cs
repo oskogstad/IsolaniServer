@@ -33,6 +33,7 @@ namespace Isolani.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllUsers() 
         {
