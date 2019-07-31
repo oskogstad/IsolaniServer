@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Isolani.Database;
 using Isolani.Model;
 using Isolani.Services.Interfaces;
@@ -13,10 +14,12 @@ namespace Isolani.Services
     public class UserManagementService : IUserManagementService
     {
         private readonly IsolaniDbContext _isolaniDbContext;
-        
-        public UserManagementService(IsolaniDbContext isolaniDbContext)
+        private readonly IMapper _objectMapper;
+
+        public UserManagementService(IsolaniDbContext isolaniDbContext, IMapper objectMapper)
         {
             _isolaniDbContext = isolaniDbContext;
+            _objectMapper = objectMapper;
         }
 
         public async Task<Guid> CreateNewUserAsync(NewUserRequest newUserRequest)
@@ -32,13 +35,26 @@ namespace Isolani.Services
 
             var savedPasswordHash = AuthenticationService.CreateSaltyPasswordHash(newUserRequest.Password);
 
-            var newUser = new User 
+//            var newUser = _objectMapper.Map<User>(newUserRequest);
+//            newUser.CreatedDate = newUser.LastLoginDate = now;
+//            newUser.Password = savedPasswordHash;
+//            newUser.Id = Guid.NewGuid();
+
+            var newUser = new User
             {
                 Id = Guid.NewGuid(),
+                Name = newUserRequest.Name,
+                ChessClubId = newUserRequest.ChessClubId,
+                BirthYear = newUserRequest.BirthYear,
+                BlitzRating = newUserRequest.BlitzRating,
+                Country = newUserRequest.Country,
+                RapidRating = newUserRequest.RapidRating,
+                StandardRating = newUserRequest.StandardRating,
                 Email = newUserRequest.Email,
-                CreatedDate  = now,
+                CreatedDate = now,
                 LastLoginDate = now,
                 Password = savedPasswordHash
+
             };
             
             await _isolaniDbContext.AddAsync(newUser);

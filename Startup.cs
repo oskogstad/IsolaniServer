@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Isolani.Database;
@@ -43,6 +44,8 @@ namespace Isolani
             {
                 options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
             });
+
+            services.AddAutoMapper(typeof(NewUserRequest), typeof(User));
             
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IUserManagementService, UserManagementService>();
