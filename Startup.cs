@@ -50,6 +50,7 @@ namespace Isolani
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IUserManagementService, UserManagementService>();
             services.AddTransient<ITournamentService, TournamentService>();
+            services.AddTransient<IChessClubService, ChessClubService>();
 
             var tokenSettingsSection = Configuration.GetSection("TokenSettings");
             services.Configure<TokenSettings>(tokenSettingsSection);

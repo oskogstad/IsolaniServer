@@ -1,10 +1,8 @@
-using System;
 using System.Threading.Tasks;
-using Isolani.Database;
 using Isolani.Models;
+using Isolani.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Isolani.Controllers
 {
@@ -12,33 +10,26 @@ namespace Isolani.Controllers
     [Route("[controller]")]
     public class ChessClubsController : ControllerBase
     {
-        private readonly IsolaniDbContext _isolaniDbContext;
-        public ChessClubsController(IsolaniDbContext isolaniDbContext)
+        private readonly IChessClubService _chessClubService;
+        public ChessClubsController(IChessClubService chessClubService)
         {
-            _isolaniDbContext = isolaniDbContext;
+            _chessClubService = chessClubService;
         }
 
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateNewChessClub(NewChessClubRequest newChessClubRequest)
         {
-            var newChessClub = new ChessClub
-            {
-                Id = Guid.NewGuid(),
-                Name = newChessClubRequest.Name
-            };
+            var newChessClubId = await _chessClubService.CreateNewChessClub(newChessClubRequest);
 
-            await _isolaniDbContext.ChessClubs.AddAsync(newChessClub);
-            await _isolaniDbContext.SaveChangesAsync();
-
-            return Ok(newChessClub.Id);
+            return Ok(newChessClubId);
         }
 
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllChessClubs()
         {
-            var allChessClubs = await _isolaniDbContext.ChessClubs.ToListAsync();
+            var allChessClubs = await _chessClubService.GetAllChessClubs();
             return Ok(allChessClubs);
         }
     }
