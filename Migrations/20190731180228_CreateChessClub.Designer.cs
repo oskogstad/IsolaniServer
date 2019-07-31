@@ -3,15 +3,17 @@ using System;
 using Isolani.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Isolani.Migrations
 {
     [DbContext(typeof(IsolaniDbContext))]
-    partial class IsolaniDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190731180228_CreateChessClub")]
+    partial class CreateChessClub
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

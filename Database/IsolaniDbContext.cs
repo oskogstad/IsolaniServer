@@ -24,5 +24,7 @@ namespace Isolani.Database
         public DbSet<User> Users { get; set; }
 
         public DbSet<Tournament> Tournaments { get; set; }
+
+        public DbSet<ChessClub> ChessClubs { get; set; }
     }
 }
