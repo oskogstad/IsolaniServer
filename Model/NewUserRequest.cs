@@ -15,6 +15,7 @@ namespace Isolani.Model
         [Required]
         public int BirthYear { get; set; }
 
+        public string Title { get; set; }
         public int? StandardRating { get; set; }
         
         public int? RapidRating { get; set; }

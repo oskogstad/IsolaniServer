@@ -46,6 +46,7 @@ namespace Isolani.Services
                 Name = newUserRequest.Name,
                 ChessClubId = newUserRequest.ChessClubId,
                 BirthYear = newUserRequest.BirthYear,
+                Title = newUserRequest.Title,
                 BlitzRating = newUserRequest.BlitzRating,
                 Country = newUserRequest.Country,
                 RapidRating = newUserRequest.RapidRating,
