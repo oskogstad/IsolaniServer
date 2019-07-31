@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Isolani.Model
+namespace Isolani.Models
 {
     [JsonObject("tokenSettings")]
     public class TokenSettings

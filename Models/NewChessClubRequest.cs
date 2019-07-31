@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Isolani.Model
+namespace Isolani.Models
 {
     public class NewChessClubRequest
     {

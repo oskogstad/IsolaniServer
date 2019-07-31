@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Isolani.Model;
+using Isolani.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Isolani.Services.Interfaces

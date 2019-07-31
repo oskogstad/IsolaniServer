@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
-using Isolani.Model;
+using Isolani.Models;
 using Isolani.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 

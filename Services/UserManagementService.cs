@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Isolani.Database;
-using Isolani.Model;
+using Isolani.Models;
 using Isolani.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 

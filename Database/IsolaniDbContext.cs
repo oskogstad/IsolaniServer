@@ -1,4 +1,4 @@
-using Isolani.Model;
+using Isolani.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Isolani.Model 
+namespace Isolani.Models 
 {
     public class User
     {

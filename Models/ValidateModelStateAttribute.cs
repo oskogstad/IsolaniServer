@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Isolani.Model
+namespace Isolani.Models
 {
     public class ValidateModelStateAttribute : ActionFilterAttribute
     {

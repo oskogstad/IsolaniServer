@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Isolani.Model;
+using Isolani.Models;
 
 namespace Isolani.Services.Interfaces
 {
