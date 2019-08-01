@@ -21,8 +21,7 @@ namespace Isolani.Services
         
         public async Task<List<Tournament>> GetAllPublicTournamentsAsync()
         {
-            var allTournaments = await _isolaniDbContext.Tournaments.ToListAsync();
-            return allTournaments;
+            return await _isolaniDbContext.Tournaments.ToListAsync();
         }
 
         public async Task<Guid> CreateNewTournament(NewTournamentRequest newTournamentRequest)

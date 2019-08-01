@@ -19,8 +19,7 @@ namespace Isolani.Services
         
         public async Task<List<ChessClub>> GetAllChessClubs()
         {
-            var allChessClubs = await _isolaniDbContext.ChessClubs.ToListAsync();
-            return allChessClubs;
+            return await _isolaniDbContext.ChessClubs.ToListAsync();
         }
 
         public async Task<Guid> CreateNewChessClub(NewChessClubRequest newChessClubRequest)
