@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Isolani.Services
 {
-    class ChessClubService : IChessClubService
+    internal class ChessClubService : IChessClubService
     {
         private readonly IsolaniDbContext _isolaniDbContext;
 

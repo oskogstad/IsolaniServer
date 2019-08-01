@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Isolani.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    internal class AuthenticationService : IAuthenticationService
     {
         private readonly IsolaniDbContext _isolaniDbContext;
         private readonly TokenSettings _tokenSettings;

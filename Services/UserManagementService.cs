@@ -11,7 +11,7 @@ namespace Isolani.Services
 {
     public class UserExistsException : Exception { }
     
-    public class UserManagementService : IUserManagementService
+    internal class UserManagementService : IUserManagementService
     {
         private readonly IsolaniDbContext _isolaniDbContext;
         private readonly IMapper _objectMapper;

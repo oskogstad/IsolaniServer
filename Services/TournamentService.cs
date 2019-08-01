@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Isolani.Services
 {
     public class MissingSubscriptionException : Exception { }
-    
-    class TournamentService : ITournamentService
+
+    internal class TournamentService : ITournamentService
     {
         private readonly IsolaniDbContext _isolaniDbContext;
 
