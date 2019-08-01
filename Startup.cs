@@ -28,6 +28,8 @@ namespace Isolani
 
         private IConfiguration Configuration { get; }
 
+        private const string CorsPolicyName = "CorsPolicy";
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -42,7 +44,7 @@ namespace Isolani
 
             services.AddCors(options =>
             {
-                options.AddPolicy("SiteCorsPolicy", corsBuilder.Build());
+                options.AddPolicy(CorsPolicyName, corsBuilder.Build());
             });
 
             services.AddAutoMapper(typeof(NewUserRequest), typeof(User));
@@ -107,7 +109,7 @@ namespace Isolani
                 context.Database.Migrate();
             }
             
-            app.UseCors("SiteCorsPolicy");
+            app.UseCors(CorsPolicyName);
             
             if (env.IsDevelopment())
             {
