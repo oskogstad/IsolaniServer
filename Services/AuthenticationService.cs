@@ -41,8 +41,14 @@ namespace Isolani.Services
             
             await _isolaniDbContext.SaveChangesAsync();
 
+            return CreateSecurityToken(user, now);
+        }
+
+        private SecurityToken CreateSecurityToken(User user, DateTime now)
+        {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_tokenSettings.Secret);
+            
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Issuer = _tokenSettings.Issuer,
@@ -51,13 +57,12 @@ namespace Isolani.Services
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
                 IssuedAt = now,
-                Expires = now.AddMinutes(_tokenSettings.ExpirationTimeInMinutes), 
+                Expires = now.AddMinutes(_tokenSettings.ExpirationTimeInMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return token;
+            
+            return tokenHandler.CreateToken(tokenDescriptor);
         }
 
 
