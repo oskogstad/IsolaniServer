@@ -9,6 +9,7 @@ namespace Isolani.Models
         [Key]
         public Guid Id { get; set; }
 
+        [ForeignKey(nameof(ChessClub))]
         public Guid? ChessClubId { get; set; }
 
         [Required]
@@ -25,9 +26,6 @@ namespace Isolani.Models
         public int? RapidRating { get; set; }
         
         public int? BlitzRating { get; set; }
-        
-        [ForeignKey(nameof(ChessClubId))]
-        public ChessClub ChessClub { get; set; }
         
         [Required]
         [EmailAddress]
