@@ -47,7 +47,13 @@ namespace Isolani
                 options.AddPolicy(CorsPolicyName, corsBuilder.Build());
             });
 
-            services.AddAutoMapper(typeof(NewUserRequest), typeof(User));
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new SimpleModelMappings());
+            });
+
+            var mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
             
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IUserManagementService, UserManagementService>();

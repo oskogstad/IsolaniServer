@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Isolani.Database;
 using Isolani.Models;
 using Isolani.Services.Interfaces;
@@ -36,29 +37,11 @@ namespace Isolani.Services
 
             var savedPasswordHash = AuthenticationService.CreateSaltyPasswordHash(newUserRequest.Password);
 
-//            var newUser = _objectMapper.Map<User>(newUserRequest);
-//            newUser.CreatedDate = newUser.LastLoginDate = now;
-//            newUser.Password = savedPasswordHash;
-//            newUser.Id = Guid.NewGuid();
+            var newUser = _objectMapper.Map<User>(newUserRequest);
+            newUser.CreatedDateUtc = newUser.LastLoginDateUtc = now;
+            newUser.Password = savedPasswordHash;
+            newUser.Id = Guid.NewGuid();
 
-            var newUser = new User
-            {
-                Id = Guid.NewGuid(),
-                Name = newUserRequest.Name,
-                ChessClubId = newUserRequest.ChessClubId,
-                BirthYear = newUserRequest.BirthYear,
-                Title = newUserRequest.Title,
-                BlitzRating = newUserRequest.BlitzRating,
-                Country = newUserRequest.Country,
-                RapidRating = newUserRequest.RapidRating,
-                StandardRating = newUserRequest.StandardRating,
-                Email = newUserRequest.Email,
-                CreatedDateUtc = now,
-                LastLoginDateUtc = now,
-                Password = savedPasswordHash
-
-            };
-            
             await _isolaniDbContext.AddAsync(newUser);
             await _isolaniDbContext.SaveChangesAsync();
 
@@ -70,19 +53,7 @@ namespace Isolani.Services
         {
             return await _isolaniDbContext
                 .Users
-                .Select(user => 
-                    new Player
-                    {
-                        Id = user.Id,
-                        BirthYear = user.BirthYear,
-                        Name = user.Name,
-                        RapidRating = user.RapidRating,
-                        BlitzRating = user.BlitzRating,
-                        StandardRating = user.StandardRating,
-                        ChessClubId = user.ChessClubId,
-                        Title = user.Title,
-                        Country = user.Country
-                    })
+                .ProjectTo<Player>(_objectMapper.ConfigurationProvider)
                 .ToListAsync();
         }
     }
