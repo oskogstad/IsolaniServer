@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Isolani.Database;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Isolani.Services
 {
     public class UserExistsException : Exception { }
-    
+
     internal class UserManagementService : IUserManagementService
     {
         private readonly IsolaniDbContext _isolaniDbContext;
@@ -64,10 +65,25 @@ namespace Isolani.Services
             return newUser.Id;
         }
 
-        public async Task<List<User>> GetAllUsersAsync()
+
+        public async Task<List<Player>> GetAllUsersAsync()
         {
-            return await _isolaniDbContext.Users.ToListAsync();
+            return await _isolaniDbContext
+                .Users
+                .Select(user => 
+                    new Player
+                    {
+                        Id = user.Id,
+                        BirthYear = user.BirthYear,
+                        Name = user.Name,
+                        RapidRating = user.RapidRating,
+                        BlitzRating = user.BlitzRating,
+                        StandardRating = user.StandardRating,
+                        ChessClubId = user.ChessClubId,
+                        Title = user.Title,
+                        Country = user.Country
+                    })
+                .ToListAsync();
         }
     }
-
 }
