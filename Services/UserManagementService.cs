@@ -39,7 +39,6 @@ namespace Isolani.Services
             var newUser = _objectMapper.Map<User>(newUserRequest);
             newUser.CreatedDateUtc = newUser.LastLoginDateUtc = now;
             newUser.Password = savedPasswordHash;
-            newUser.Id = Guid.NewGuid();
 
             await _isolaniDbContext.AddAsync(newUser);
             await _isolaniDbContext.SaveChangesAsync();
