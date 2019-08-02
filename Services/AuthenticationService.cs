@@ -18,9 +18,9 @@ namespace Isolani.Services
         private readonly IsolaniDbContext _isolaniDbContext;
         private readonly TokenSettings _tokenSettings;
 
-        private const int _saltLength = 31;
-        private const int _hashLength = 33;
-        private const int _numberOfIterations = 2500;
+        private const int SaltLength = 31;
+        private const int HashLength = 33;
+        private const int NumberOfIterations = 2500;
 
         public AuthenticationService(IsolaniDbContext isolaniDbContext, IOptions<TokenSettings> tokenSettings)
         {
@@ -69,14 +69,14 @@ namespace Isolani.Services
         public static string CreateSaltyPasswordHash(string password)
         {
             byte[] salt;
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[_saltLength]);
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[SaltLength]);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, _numberOfIterations);
-            var hash = pbkdf2.GetBytes(_hashLength);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, NumberOfIterations);
+            var hash = pbkdf2.GetBytes(HashLength);
 
-            var hashAndSaltBytes = new byte[_saltLength + _hashLength];
-            Array.Copy(salt, 0, hashAndSaltBytes, 0, _saltLength);
-            Array.Copy(hash, 0, hashAndSaltBytes, _saltLength, _hashLength);
+            var hashAndSaltBytes = new byte[SaltLength + HashLength];
+            Array.Copy(salt, 0, hashAndSaltBytes, 0, SaltLength);
+            Array.Copy(hash, 0, hashAndSaltBytes, SaltLength, HashLength);
 
             return Convert.ToBase64String(hashAndSaltBytes);
         }
@@ -84,14 +84,14 @@ namespace Isolani.Services
         private static void VerifyPassword(string savedSaltyPasswordHash, string requestPassword)
         {
             var saltyHashBytes = Convert.FromBase64String(savedSaltyPasswordHash);
-            var salt = new byte[_saltLength];
-            var savedPasswordHash = new byte[_hashLength];
+            var salt = new byte[SaltLength];
+            var savedPasswordHash = new byte[HashLength];
 
-            Array.Copy(saltyHashBytes, _saltLength, savedPasswordHash, 0, _hashLength);
-            Array.Copy(saltyHashBytes, 0, salt, 0, _saltLength);
+            Array.Copy(saltyHashBytes, SaltLength, savedPasswordHash, 0, HashLength);
+            Array.Copy(saltyHashBytes, 0, salt, 0, SaltLength);
 
-            var pbkdf2 = new Rfc2898DeriveBytes(requestPassword, salt, _numberOfIterations);
-            var requestPasswordHash = pbkdf2.GetBytes(_hashLength);
+            var pbkdf2 = new Rfc2898DeriveBytes(requestPassword, salt, NumberOfIterations);
+            var requestPasswordHash = pbkdf2.GetBytes(HashLength);
 
             // slow equals
             var diff = savedPasswordHash.Length ^ requestPasswordHash.Length;

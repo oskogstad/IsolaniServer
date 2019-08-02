@@ -11,7 +11,7 @@ namespace Isolani.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private const string _unauthorizedMessage = "Incorrect email and/or password";
+        private const string UnauthorizedMessage = "Incorrect email and/or password";
 
         private readonly IAuthenticationService _authenticationService;
 
@@ -32,7 +32,7 @@ namespace Isolani.Controllers
             catch(UnauthorizedAccessException e)
             {
                 Console.WriteLine(e.Message);
-                return Unauthorized(_unauthorizedMessage);
+                return Unauthorized(UnauthorizedMessage);
             }
         }
     }
