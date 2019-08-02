@@ -1,6 +1,7 @@
 using Isolani.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Isolani.Database
 {
@@ -10,6 +11,11 @@ namespace Isolani.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<Game>()
+                .Property(game => game.GameState)
+                .HasConversion(new EnumToStringConverter<GameState>());
+            
             modelBuilder.Entity<User>()
                 .Property(user => user.CreatedDate)
                 .Metadata
@@ -21,6 +27,8 @@ namespace Isolani.Database
             });
         }
 
+        public DbSet<Game> Games { get; set; }
+        
         public DbSet<User> Users { get; set; }
 
         public DbSet<Tournament> Tournaments { get; set; }
