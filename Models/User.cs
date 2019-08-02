@@ -35,9 +35,9 @@ namespace Isolani.Models
         public string Password { get; set; }
 
         [Required]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDateUtc { get; set; }
 
         [Required]
-        public DateTime LastLoginDate { get; set; }
+        public DateTime LastLoginDateUtc { get; set; }
     }
 }

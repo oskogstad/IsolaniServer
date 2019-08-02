@@ -17,7 +17,7 @@ namespace Isolani.Database
                 .HasConversion(new EnumToStringConverter<GameState>());
             
             modelBuilder.Entity<User>()
-                .Property(user => user.CreatedDate)
+                .Property(user => user.CreatedDateUtc)
                 .Metadata
                 .AfterSaveBehavior = PropertySaveBehavior.Throw;
 

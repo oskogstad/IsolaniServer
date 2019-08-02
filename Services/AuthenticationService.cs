@@ -37,7 +37,7 @@ namespace Isolani.Services
             VerifyPassword(user.Password, tokenRequest.Password);
 
             var now = DateTime.UtcNow;
-            user.LastLoginDate = now;
+            user.LastLoginDateUtc = now;
             
             await _isolaniDbContext.SaveChangesAsync();
 

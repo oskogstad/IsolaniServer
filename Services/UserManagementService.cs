@@ -52,8 +52,8 @@ namespace Isolani.Services
                 RapidRating = newUserRequest.RapidRating,
                 StandardRating = newUserRequest.StandardRating,
                 Email = newUserRequest.Email,
-                CreatedDate = now,
-                LastLoginDate = now,
+                CreatedDateUtc = now,
+                LastLoginDateUtc = now,
                 Password = savedPasswordHash
 
             };
