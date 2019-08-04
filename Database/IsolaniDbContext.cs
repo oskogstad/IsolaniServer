@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Isolani.Database
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class IsolaniDbContext : DbContext 
     {
         public IsolaniDbContext(DbContextOptions options) : base(options) { }
