@@ -23,6 +23,7 @@ psql -d postgres
  
 ```
 create user isolani_db_user password 'SomeAmazingPassword';
+alter user isolani_db_user password createdb;
 ```
 
 ` \q ` to exit psql.
