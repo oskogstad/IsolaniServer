@@ -30,5 +30,12 @@ alter user isolani_db_user password createdb;
 
 * Start application from the root folder of IsolaniServer
 ```
-dotnet ef database update
+dotnet run
 ```
+
+This should create the database and run EF migrations.
+
+
+# TODO
+* Add Swagger
+
