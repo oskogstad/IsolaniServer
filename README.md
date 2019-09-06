@@ -22,12 +22,12 @@ psql -d postgres
 
  
 ```
-create user chess_db_user password 'SomeAmazingPassword';
+create user isolani_db_user password 'SomeAmazingPassword';
 ```
 
 ` \q ` to exit psql.
 
-* Run EF migrations
+* Run EF migrations, from the root folder of IsolaniServer
 ```
 dotnet ef database update
 ```
