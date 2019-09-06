@@ -28,7 +28,7 @@ alter user isolani_db_user password createdb;
 
 ` \q ` to exit psql.
 
-* Run EF migrations, from the root folder of IsolaniServer
+* Start application from the root folder of IsolaniServer
 ```
 dotnet ef database update
 ```
