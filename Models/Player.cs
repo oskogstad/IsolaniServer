@@ -7,6 +7,7 @@ namespace Isolani.Models
     public class Player
     {
         [Key]
+        [ForeignKey(nameof(User))]
         public Guid Id { get; set; }
 
         [ForeignKey(nameof(ChessClub))]

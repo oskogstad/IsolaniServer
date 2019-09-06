@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Isolani.Models
 {
-    public class NewUserRequest : TokenRequest
+    public class NewUserPlayerRequest : TokenRequest
     {
         public Guid? ChessClubId { get; set; }
 
@@ -16,6 +16,7 @@ namespace Isolani.Models
         public int BirthYear { get; set; }
 
         public string Title { get; set; }
+        
         public int? StandardRating { get; set; }
         
         public int? RapidRating { get; set; }

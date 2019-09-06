@@ -3,8 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Isolani.Models 
 {
-    public class User : Player
+    public class User
     {
+        [Key]
+        public Guid Id { get; set; }
+        
         [Required]
         [EmailAddress]
         public string Email { get; set; }

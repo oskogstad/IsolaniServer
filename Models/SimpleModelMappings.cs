@@ -6,8 +6,8 @@ namespace Isolani.Models
     {
         public SimpleModelMappings()
         {
-            CreateMap<User, Player>();
-            CreateMap<NewUserRequest, User>();
+            CreateMap<NewUserPlayerRequest, Player>();
+            CreateMap<NewUserPlayerRequest, User>();
         }
     }
 }

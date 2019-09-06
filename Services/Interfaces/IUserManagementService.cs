@@ -7,7 +7,7 @@ namespace Isolani.Services.Interfaces
 {
     public interface IUserManagementService
     {
-        Task<Guid> CreateNewUserAsync(NewUserRequest newUserRequest);
+        Task<Guid> CreateNewUserPlayerAsync(NewUserPlayerRequest newUserPlayerRequest);
         Task<List<Player>> GetAllUsersAsync();
     }
 }

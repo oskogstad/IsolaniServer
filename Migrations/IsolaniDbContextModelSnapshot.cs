@@ -54,13 +54,44 @@ namespace Isolani.Migrations
 
                     b.HasIndex("PlayerWhiteId");
 
+                    b.HasIndex("TournamentId");
+
                     b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("Isolani.Models.Player", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BirthYear");
+
+                    b.Property<int?>("BlitzRating");
+
+                    b.Property<Guid?>("ChessClubId");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int?>("RapidRating");
+
+                    b.Property<int?>("StandardRating");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("Isolani.Models.Tournament", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("ArrangingChessClubId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -75,14 +106,6 @@ namespace Isolani.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("BirthYear");
-
-                    b.Property<int?>("BlitzRating");
-
-                    b.Property<Guid?>("ChessClubId");
-
-                    b.Property<string>("Country");
-
                     b.Property<DateTime>("CreatedDateUtc");
 
                     b.Property<string>("Email")
@@ -90,17 +113,8 @@ namespace Isolani.Migrations
 
                     b.Property<DateTime>("LastLoginDateUtc");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
-
                     b.Property<string>("Password")
                         .IsRequired();
-
-                    b.Property<int?>("RapidRating");
-
-                    b.Property<int?>("StandardRating");
-
-                    b.Property<string>("Title");
 
                     b.HasKey("Id");
 
@@ -120,6 +134,11 @@ namespace Isolani.Migrations
                     b.HasOne("Isolani.Models.User", "PlayerWhite")
                         .WithMany()
                         .HasForeignKey("PlayerWhiteId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Isolani.Models.Tournament")
+                        .WithMany("Games")
+                        .HasForeignKey("TournamentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

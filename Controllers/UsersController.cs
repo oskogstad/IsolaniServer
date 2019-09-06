@@ -20,16 +20,16 @@ namespace Isolani.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> CreateNewUser([FromBody] NewUserRequest newUserRequest)
+        public async Task<IActionResult> CreateNewUser([FromBody] NewUserPlayerRequest newUserPlayerRequest)
         {
             try
             {
-                var newUserId = await _userManagementService.CreateNewUserAsync(newUserRequest);
+                var newUserId = await _userManagementService.CreateNewUserPlayerAsync(newUserPlayerRequest);
                 return Ok(newUserId);
             }
             catch (UserExistsException)
             {
-                return StatusCode((int) HttpStatusCode.Conflict, $"User with email '{newUserRequest.Email}' already exists");
+                return StatusCode((int) HttpStatusCode.Conflict, $"User with email '{newUserPlayerRequest.Email}' already exists");
             }
         }
 

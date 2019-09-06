@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Isolani.Database;
 using Isolani.Models;
 using Isolani.Services.Interfaces;
@@ -23,24 +22,33 @@ namespace Isolani.Services
             _objectMapper = objectMapper;
         }
 
-        public async Task<Guid> CreateNewUserAsync(NewUserRequest newUserRequest)
+        public async Task<Guid> CreateNewUserPlayerAsync(NewUserPlayerRequest newUserPlayerRequest)
         {
             var userWithEmailExists = await 
                 _isolaniDbContext.Users
-                    .AnyAsync(user => user.Email.Equals(newUserRequest.Email));
+                    .AnyAsync(user => user.Email.Equals(newUserPlayerRequest.Email));
 
             if (userWithEmailExists)
                 throw new UserExistsException();
 
             var now = DateTime.UtcNow;
 
-            var savedPasswordHash = AuthenticationService.CreateSaltyPasswordHash(newUserRequest.Password);
+            var savedPasswordHash = AuthenticationService.CreateSaltyPasswordHash(newUserPlayerRequest.Password);
 
-            var newUser = _objectMapper.Map<User>(newUserRequest);
+            var userId = Guid.NewGuid();
+            
+            var newUser = _objectMapper.Map<User>(newUserPlayerRequest);
+            newUser.Id = userId;
             newUser.CreatedDateUtc = newUser.LastLoginDateUtc = now;
             newUser.Password = savedPasswordHash;
 
             await _isolaniDbContext.AddAsync(newUser);
+            
+            var newPlayer = _objectMapper.Map<Player>(newUserPlayerRequest);
+            newPlayer.Id = userId;
+
+            await _isolaniDbContext.AddAsync(newPlayer);
+            
             await _isolaniDbContext.SaveChangesAsync();
 
             return newUser.Id;
@@ -50,8 +58,7 @@ namespace Isolani.Services
         public async Task<List<Player>> GetAllUsersAsync()
         {
             return await _isolaniDbContext
-                .Users
-                .ProjectTo<Player>(_objectMapper.ConfigurationProvider)
+                .Players
                 .ToListAsync();
         }
     }
