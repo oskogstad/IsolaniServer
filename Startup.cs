@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace Isolani
 {
@@ -104,6 +105,12 @@ namespace Isolani
                     options.Filters.Add(typeof(ValidateModelStateAttribute));
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services
+                .AddSwaggerGen(c => 
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Isolani API", Version = "v1" });
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +123,12 @@ namespace Isolani
             }
             
             app.UseCors(CorsPolicyName);
+        
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
             
             if (env.IsDevelopment())
             {
