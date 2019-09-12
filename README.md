@@ -34,8 +34,3 @@ dotnet run
 ```
 
 This should create the database and run EF migrations.
-
-
-# TODO
-* Add Swagger
-
