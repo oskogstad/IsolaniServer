@@ -33,4 +33,4 @@ alter user isolani_db_user password createdb;
 dotnet run
 ```
 
-This should create the database and run EF migrations.
+This should create the database, run EF migrations, and start the API.
