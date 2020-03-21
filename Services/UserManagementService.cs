@@ -26,7 +26,8 @@ namespace Isolani.Services
         {
             var userWithEmailExists = await 
                 _isolaniDbContext.Users
-                    .AnyAsync(user => user.Email.Equals(newUserPlayerRequest.Email));
+                    .AnyAsync(user => 
+                        user.Email.Equals(newUserPlayerRequest.Email, StringComparison.OrdinalIgnoreCase));
 
             if (userWithEmailExists)
                 throw new UserExistsException();
