@@ -20,7 +20,7 @@ namespace Isolani.Database
             modelBuilder.Entity<User>()
                 .Property(user => user.CreatedDateUtc)
                 .Metadata
-                .AfterSaveBehavior = PropertySaveBehavior.Throw;
+                .SetAfterSaveBehavior(PropertySaveBehavior.Throw);
 
             modelBuilder.Entity<User>(user => 
             {
