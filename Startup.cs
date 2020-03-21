@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -104,7 +105,7 @@ namespace Isolani
                     options.Filters.Add(new AuthorizeFilter(policy));
                     options.Filters.Add(typeof(ValidateModelStateAttribute));
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services
                 .AddSwaggerGen(c => 
@@ -114,7 +115,7 @@ namespace Isolani
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
@@ -140,7 +141,9 @@ namespace Isolani
             }
             
             app.UseAuthentication();
-            app.UseMvc();
+            
+            app.UseRouting();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }
