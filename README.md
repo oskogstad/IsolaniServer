@@ -28,6 +28,7 @@ alter user isolani_db_user createdb;
 
 ` \q ` to exit psql.
 
+* `SomeAmazingPassword`needs to be added to appsettings.json DB connection string
 * Start application from the root folder of IsolaniServer
 ```
 dotnet run
